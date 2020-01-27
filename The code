@@ -1,0 +1,21 @@
+import requests
+import pandas as pd
+import sqlalchemy 
+import psycopg2
+
+
+#df=pd.read_json('https://api.github.com/users/DariusDarvish',orient='index',typ='frame',convert_axes=True)
+
+
+
+req=requests.get('https://api.github.com/users/DariusDarvish')
+
+reply=req.json()
+
+
+df=pd.DataFrame.from_dict([reply])
+
+engine = sqlalchemy.create_engine('postgresql://postgres:(password)@localhost:5432/postgres')
+
+df.to_sql('vest',con=engine)
+
